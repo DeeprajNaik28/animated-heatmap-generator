@@ -33,31 +33,58 @@ function App() {
   return (
 
     <div
-  style={{
-    width: "100vw",
-    height: "100vh",
-    overflow: "hidden",
-    position: "relative"
-  }}
->
+      style={{
+        width: "100vw",
+        height: "100vh",
+        overflow: "hidden",
+        position: "relative"
+      }}
+    >
 
       <div
+        className="control-panel"
         style={{
           position: "absolute",
           zIndex: 10,
-          top: 20,
-          left: 20,
+          top: "16px",
+          left: "16px",
+          width: "min(320px, 90vw)",
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
-          background: "rgba(0,0,0,0.6)",
-          padding: "16px",
-          borderRadius: "12px",
+          gap: "12px",
+          padding: "18px",
+          borderRadius: "20px",
+          background: "rgba(15,15,15,0.75)",
+          backdropFilter: "blur(15px)",
+          border: "1px solid rgba(255,255,255,0.15)",
           color: "white",
-          width: "220px",
-          fontFamily: "sans-serif"
+          fontFamily: "Inter, sans-serif",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.4)"
         }}
       >
+
+        <div>
+
+          <h2
+            style={{
+              margin: 0,
+              fontSize: "22px"
+            }}
+          >
+            HeatmapFX
+          </h2>
+
+          <p
+            style={{
+              marginTop: "4px",
+              fontSize: "13px",
+              opacity: 0.7
+            }}
+          >
+            Animated Image Heatmaps
+          </p>
+
+        </div>
 
         <input
           type="file"
@@ -65,11 +92,33 @@ function App() {
           onChange={handleUpload}
         />
 
+        {image && (
+
+          <img
+            src={image}
+            alt="preview"
+            style={{
+              width: "100%",
+              height: "140px",
+              objectFit: "cover",
+              borderRadius: "12px",
+              border: "1px solid rgba(255,255,255,0.1)"
+            }}
+          />
+
+        )}
+
         <select
           value={preset}
           onChange={(e) =>
             setPreset(e.target.value)
           }
+          style={{
+            padding: "10px",
+            borderRadius: "10px",
+            border: "none",
+            outline: "none"
+          }}
         >
 
           <option value="thermal">
@@ -95,7 +144,7 @@ function App() {
         </select>
 
         <label>
-          Speed
+          Speed: {speed}
         </label>
 
         <input
@@ -114,7 +163,7 @@ function App() {
         />
 
         <label>
-          Distortion
+          Distortion: {distortion.toFixed(2)}
         </label>
 
         <input
@@ -133,7 +182,7 @@ function App() {
         />
 
         <label>
-          Glow
+          Glow: {glow.toFixed(1)}
         </label>
 
         <input

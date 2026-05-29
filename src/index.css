@@ -11,3 +11,20 @@ body,
   height: 100%;
   overflow: hidden;
 }
+
+input[type="range"] {
+  width: 100%;
+}
+
+input,
+select {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+
+  .control-panel {
+    width: calc(100vw - 32px);
+  }
+
+}
