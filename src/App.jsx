@@ -18,6 +18,9 @@ function App() {
   const [glow, setGlow] =
     useState(1);
 
+  const [showPanel, setShowPanel] =
+    useState(true);
+
   const handleUpload = (e) => {
 
     const file = e.target.files[0];
@@ -30,6 +33,25 @@ function App() {
     setImage(imageURL);
   };
 
+  const presetButtonStyle = (
+    presetName
+  ) => ({
+    padding: "12px",
+    borderRadius: "12px",
+    border:
+      preset === presetName
+        ? "2px solid #ffffff"
+        : "1px solid rgba(255,255,255,0.15)",
+    background:
+      preset === presetName
+        ? "rgba(255,255,255,0.15)"
+        : "rgba(255,255,255,0.05)",
+    color: "white",
+    cursor: "pointer",
+    fontSize: "15px",
+    transition: "0.2s"
+  });
+
   return (
 
     <div
@@ -41,166 +63,247 @@ function App() {
       }}
     >
 
-      <div
-        className="control-panel"
+      <button
+        onClick={() =>
+          setShowPanel(!showPanel)
+        }
         style={{
           position: "absolute",
-          zIndex: 10,
           top: "16px",
-          left: "16px",
-          width: "min(320px, 90vw)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "12px",
-          padding: "18px",
-          borderRadius: "20px",
-          background: "rgba(15,15,15,0.75)",
-          backdropFilter: "blur(15px)",
-          border: "1px solid rgba(255,255,255,0.15)",
+          right: "16px",
+          zIndex: 20,
+          padding: "12px 18px",
+          border: "none",
+          borderRadius: "14px",
+          background:
+            "rgba(15,15,15,0.8)",
           color: "white",
-          fontFamily: "Inter, sans-serif",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.4)"
+          cursor: "pointer",
+          backdropFilter:
+            "blur(10px)",
+          fontWeight: "bold"
         }}
       >
+        {showPanel
+          ? "Hide Controls"
+          : "Show Controls"}
+      </button>
 
-        <div>
+      {showPanel && (
 
-          <h2
-            style={{
-              margin: 0,
-              fontSize: "22px"
-            }}
-          >
-            HeatmapFX
-          </h2>
-
-          <p
-            style={{
-              marginTop: "4px",
-              fontSize: "13px",
-              opacity: 0.7
-            }}
-          >
-            Animated Image Heatmaps
-          </p>
-
-        </div>
-
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleUpload}
-        />
-
-        {image && (
-
-          <img
-            src={image}
-            alt="preview"
-            style={{
-              width: "100%",
-              height: "140px",
-              objectFit: "cover",
-              borderRadius: "12px",
-              border: "1px solid rgba(255,255,255,0.1)"
-            }}
-          />
-
-        )}
-
-        <select
-          value={preset}
-          onChange={(e) =>
-            setPreset(e.target.value)
-          }
+        <div
+          className="control-panel"
           style={{
-            padding: "10px",
-            borderRadius: "10px",
-            border: "none",
-            outline: "none"
+            position: "absolute",
+            zIndex: 10,
+            top: "16px",
+            left: "16px",
+            width: "min(340px, 90vw)",
+            maxHeight: "90vh",
+            overflowY: "auto",
+            display: "flex",
+            flexDirection: "column",
+            gap: "12px",
+            padding: "18px",
+            borderRadius: "20px",
+            background:
+              "rgba(15,15,15,0.75)",
+            backdropFilter:
+              "blur(15px)",
+            border:
+              "1px solid rgba(255,255,255,0.15)",
+            color: "white",
+            fontFamily:
+              "Inter, sans-serif",
+            boxShadow:
+              "0 10px 30px rgba(0,0,0,0.4)"
           }}
         >
 
-          <option value="thermal">
-            Thermal
-          </option>
+          <div>
 
-          <option value="lava">
-            Neon Lava
-          </option>
+            <h2
+              style={{
+                margin: 0,
+                fontSize: "24px"
+              }}
+            >
+              HeatmapFX
+            </h2>
 
-          <option value="toxic">
-            Toxic
-          </option>
+            <p
+              style={{
+                marginTop: "5px",
+                fontSize: "13px",
+                opacity: 0.7
+              }}
+            >
+              Animated Image Heatmaps
+            </p>
 
-          <option value="ocean">
-            Ocean
-          </option>
+          </div>
 
-          <option value="glitch">
-            Glitch
-          </option>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleUpload}
+          />
 
-        </select>
+          {image && (
 
-        <label>
-          Speed: {speed}
-        </label>
+            <img
+              src={image}
+              alt="preview"
+              style={{
+                width: "100%",
+                height: "140px",
+                objectFit: "cover",
+                borderRadius: "12px",
+                border:
+                  "1px solid rgba(255,255,255,0.1)"
+              }}
+            />
 
-        <input
-          type="range"
-          min="0"
-          max="5"
-          step="0.1"
-          value={speed}
-          onChange={(e) =>
-            setSpeed(
-              parseFloat(
-                e.target.value
+          )}
+
+          <h3
+            style={{
+              margin: "8px 0 0"
+            }}
+          >
+            Presets
+          </h3>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "1fr 1fr",
+              gap: "10px"
+            }}
+          >
+
+            <button
+              style={presetButtonStyle(
+                "thermal"
+              )}
+              onClick={() =>
+                setPreset("thermal")
+              }
+            >
+              🌈 Thermal
+            </button>
+
+            <button
+              style={presetButtonStyle(
+                "lava"
+              )}
+              onClick={() =>
+                setPreset("lava")
+              }
+            >
+              🔥 Lava
+            </button>
+
+            <button
+              style={presetButtonStyle(
+                "toxic"
+              )}
+              onClick={() =>
+                setPreset("toxic")
+              }
+            >
+              ☣ Toxic
+            </button>
+
+            <button
+              style={presetButtonStyle(
+                "ocean"
+              )}
+              onClick={() =>
+                setPreset("ocean")
+              }
+            >
+              🌊 Ocean
+            </button>
+
+            <button
+              style={presetButtonStyle(
+                "glitch"
+              )}
+              onClick={() =>
+                setPreset("glitch")
+              }
+            >
+              ⚡ Glitch
+            </button>
+
+          </div>
+
+          <label>
+            Speed: {speed}
+          </label>
+
+          <input
+            type="range"
+            min="0"
+            max="5"
+            step="0.1"
+            value={speed}
+            onChange={(e) =>
+              setSpeed(
+                parseFloat(
+                  e.target.value
+                )
               )
-            )
-          }
-        />
+            }
+          />
 
-        <label>
-          Distortion: {distortion.toFixed(2)}
-        </label>
+          <label>
+            Distortion:
+            {" "}
+            {distortion.toFixed(2)}
+          </label>
 
-        <input
-          type="range"
-          min="0"
-          max="0.2"
-          step="0.005"
-          value={distortion}
-          onChange={(e) =>
-            setDistortion(
-              parseFloat(
-                e.target.value
+          <input
+            type="range"
+            min="0"
+            max="0.2"
+            step="0.005"
+            value={distortion}
+            onChange={(e) =>
+              setDistortion(
+                parseFloat(
+                  e.target.value
+                )
               )
-            )
-          }
-        />
+            }
+          />
 
-        <label>
-          Glow: {glow.toFixed(1)}
-        </label>
+          <label>
+            Glow:
+            {" "}
+            {glow.toFixed(1)}
+          </label>
 
-        <input
-          type="range"
-          min="0"
-          max="3"
-          step="0.1"
-          value={glow}
-          onChange={(e) =>
-            setGlow(
-              parseFloat(
-                e.target.value
+          <input
+            type="range"
+            min="0"
+            max="3"
+            step="0.1"
+            value={glow}
+            onChange={(e) =>
+              setGlow(
+                parseFloat(
+                  e.target.value
+                )
               )
-            )
-          }
-        />
+            }
+          />
 
-      </div>
+        </div>
+
+      )}
 
       <ShaderCanvas
         image={image}
