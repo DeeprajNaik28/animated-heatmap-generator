@@ -33,6 +33,8 @@ export default function ShaderCanvas({
       window.innerHeight
     );
 
+mountRef.current.innerHTML = "";
+
     mountRef.current.appendChild(
       renderer.domElement
     );
@@ -272,5 +274,13 @@ export default function ShaderCanvas({
     glow
   ]);
 
-  return <div ref={mountRef} />;
+  return (
+  <div
+    ref={mountRef}
+    style={{
+      width: "100%",
+      height: "100%"
+    }}
+  />
+);
 }
