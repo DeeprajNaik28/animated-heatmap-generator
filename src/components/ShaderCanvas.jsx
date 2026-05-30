@@ -363,6 +363,17 @@ window.startRecording =
     return new Promise(
       (resolve) => {
 
+        const oldWidth =
+          window.innerWidth;
+
+        const oldHeight =
+          window.innerHeight;
+
+        renderer.setSize(
+          1920,
+          1080
+        );
+
         const stream =
           canvas.captureStream(60);
 
@@ -422,7 +433,10 @@ window.startRecording =
             URL.revokeObjectURL(
               url
             );
-
+renderer.setSize(
+  oldWidth,
+  oldHeight
+);
             resolve();
           };
 
