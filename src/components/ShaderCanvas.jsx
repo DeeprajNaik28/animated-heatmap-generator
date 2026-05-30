@@ -28,6 +28,9 @@ export default function ShaderCanvas({
       antialias: true
     });
 
+const canvas =
+  renderer.domElement;
+
     renderer.setSize(
       window.innerWidth,
       window.innerHeight
@@ -229,6 +232,87 @@ mountRef.current.innerHTML = "";
     };
 
     animate();
+
+window.startRecording =
+  async () => {
+
+    return new Promise(
+      (resolve) => {
+
+        const stream =
+          canvas.captureStream(60);
+
+        const recorder =
+          new MediaRecorder(
+            stream,
+            {
+              mimeType:
+                "video/webm"
+            }
+          );
+
+        const chunks = [];
+
+        recorder.ondataavailable =
+          (event) => {
+
+            if (
+              event.data.size > 0
+            ) {
+
+              chunks.push(
+                event.data
+              );
+            }
+          };
+
+        recorder.onstop =
+          () => {
+
+            const blob =
+              new Blob(
+                chunks,
+                {
+                  type:
+                    "video/webm"
+                }
+              );
+
+            const url =
+              URL.createObjectURL(
+                blob
+              );
+
+            const a =
+              document.createElement(
+                "a"
+              );
+
+            a.href = url;
+
+            a.download =
+              "heatmap-animation.webm";
+
+            a.click();
+
+            URL.revokeObjectURL(
+              url
+            );
+
+            resolve();
+          };
+
+        recorder.start();
+
+        setTimeout(() => {
+
+          recorder.stop();
+
+        }, 5000);
+
+      }
+    );
+  };
 
     const handleResize = () => {
 

@@ -2,6 +2,8 @@ import { useState } from "react";
 import ShaderCanvas from "./components/ShaderCanvas";
 
 function App() {
+const [isRecording, setIsRecording] =
+  useState(false);
 
   const [image, setImage] =
     useState(null);
@@ -88,6 +90,45 @@ function App() {
           ? "Hide Controls"
           : "Show Controls"}
       </button>
+
+
+<button
+  onClick={() => {
+
+    if (
+      window.startRecording
+    ) {
+
+      setIsRecording(true);
+
+      window
+        .startRecording()
+        .finally(() =>
+          setIsRecording(false)
+        );
+    }
+
+  }}
+  disabled={isRecording}
+  style={{
+    position: "absolute",
+    top: "72px",
+    right: "16px",
+    zIndex: 20,
+    padding: "12px 18px",
+    border: "none",
+    borderRadius: "14px",
+    background: "#22c55e",
+    color: "white",
+    cursor: "pointer",
+    fontWeight: "bold"
+  }}
+>
+  {isRecording
+    ? "Recording..."
+    : "📥 Download GIF"}
+</button>
+
 
       {showPanel && (
 
