@@ -1,30 +1,51 @@
 # HeatmapFX
 
-HeatmapFX is an interactive web application that transforms uploaded images into animated heatmap-style visual effects using WebGL shaders. Users can upload an image, apply different visual presets, customize animation parameters, and export short animated recordings directly from the browser.
+HeatmapFX is an interactive web application that transforms images into animated visual effects using GPU-powered shaders. Users can upload images, apply different animation presets, customize motion settings, and export Full HD animated videos directly from the browser.
 
-## Features
+## 🚀 Features
 
-* Upload images (JPG, PNG, WEBP)
-* Real-time shader-based rendering
-* Multiple visual presets:
+### Image Processing
 
-  * 🌈 Thermal
-  * 🔥 Lava
-  * ☣ Toxic
-  * 🌊 Ocean
-  * ⚡ Glitch
-* Adjustable controls:
-
-  * Animation Speed
-  * Distortion Strength
-  * Glow Intensity
+* Upload JPG, PNG, WEBP and other image formats
+* Real-time image rendering
 * Live image preview
-* Hide/Show control panel
-* 5-second animation recording export
-* Fully browser-based processing
-* Mobile-friendly responsive interface
+* Browser-based processing (no server required)
 
-## Tech Stack
+### Animation Presets
+
+* ✨ Original (keep original colors with motion effects)
+* 🌈 Thermal
+* 🔥 Lava
+* ☣ Toxic
+* 🌊 Ocean
+* ⚡ Glitch
+
+### Motion Controls
+
+* Animation Speed
+* Distortion Strength
+* Glow Intensity
+* Real-time updates
+
+### User Interface
+
+* Modern glassmorphism design
+* Mobile-friendly layout
+* Responsive controls
+* Hide / Show editing panel
+* Fullscreen viewing experience
+
+### Export
+
+* Record animated output
+* Automatic 5-second recording
+* Full HD (1920×1080) export
+* Browser-based video generation
+* One-click download
+
+---
+
+## 🛠️ Built With
 
 * React
 * Vite
@@ -33,15 +54,17 @@ HeatmapFX is an interactive web application that transforms uploaded images into
 * WebGL
 * MediaRecorder API
 
-## Installation
+---
+
+## 📦 Installation
 
 Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/your-username/heatmapfx.git
 ```
 
-Navigate into the project:
+Navigate to the project:
 
 ```bash
 cd heatmapfx
@@ -59,9 +82,11 @@ Start the development server:
 npm run dev
 ```
 
-## Build
+---
 
-Create a production build:
+## 🔨 Production Build
+
+Build the application:
 
 ```bash
 npm run build
@@ -73,25 +98,35 @@ Preview production build:
 npm run preview
 ```
 
-## Deployment
+---
 
-The project is deployed on:
+## 🌐 Deployment
+
+This project is deployed directly to:
 
 * Vercel
 
-Since all processing happens in the browser, no backend server is required.
+No backend server is required because all rendering, animation, and video recording happen in the browser.
 
-## Status
+---
 
-Current version includes:
+## 📱 Mobile Support
 
-* Image upload
-* Animated heatmap effects
-* Preset selection
-* Custom effect controls
-* Animation recording
+HeatmapFX is designed to work on:
 
-Planned future updates:
+* Desktop browsers
+* Tablets
+* Mobile devices
 
-* Higher-quality video exports
-* Advanced motion effects
+Responsive controls automatically adapt to different screen sizes.
+
+---
+
+## 🎬 Current Export System
+
+Current version supports:
+
+* 5-second animated recording
+* Full HD (1920×1080) export
+* WebM video output
+* Client-side rendering
