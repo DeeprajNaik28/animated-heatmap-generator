@@ -90,17 +90,104 @@ mountRef.current.innerHTML = "";
             float t =
               uTime * uSpeed;
 
-            vec2 distortedUV = uv;
+vec2 distortedUV = uv;
 
-            distortedUV.y +=
-              sin(
-                uv.x * 10.0 + t
-              ) * uDistortion;
+if (uPreset == 0.0) {
 
-            distortedUV.x +=
-              cos(
-                uv.y * 8.0 + t
-              ) * uDistortion;
+    // THERMAL
+    distortedUV.x +=
+      sin(
+        uv.y * 15.0 +
+        t * 1.2
+      ) * uDistortion;
+
+    distortedUV.y +=
+      cos(
+        uv.x * 12.0 +
+        t
+      ) * uDistortion;
+}
+
+else if (uPreset == 1.0) {
+
+    // LAVA SWIRL
+
+    float angle =
+      sin(
+        uv.x * 8.0 +
+        uv.y * 8.0 +
+        t
+      ) * 0.5;
+
+    distortedUV.x +=
+      cos(angle) *
+      uDistortion *
+      1.5;
+
+    distortedUV.y +=
+      sin(angle) *
+      uDistortion *
+      1.5;
+}
+
+else if (uPreset == 2.0) {
+
+    // TOXIC BUBBLE
+
+    distortedUV.x +=
+      sin(
+        uv.y * 20.0 +
+        t * 2.0
+      ) *
+      uDistortion *
+      0.8;
+
+    distortedUV.y +=
+      cos(
+        uv.x * 25.0 +
+        t * 1.5
+      ) *
+      uDistortion *
+      1.2;
+}
+
+else if (uPreset == 3.0) {
+
+    // OCEAN CURRENT
+
+    distortedUV.x +=
+      sin(
+        uv.y * 6.0 +
+        t * 0.5
+      ) *
+      uDistortion *
+      2.0;
+
+    distortedUV.y +=
+      cos(
+        uv.x * 5.0 +
+        t * 0.4
+      ) *
+      uDistortion;
+}
+
+else {
+
+    // GLITCH
+
+    float slice =
+      floor(
+        uv.y * 30.0
+      );
+
+    distortedUV.x +=
+      sin(
+        slice +
+        t * 10.0
+      ) *
+      uDistortion *
+      3.0;
+}
 
             vec4 texColor =
               texture2D(
