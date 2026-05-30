@@ -224,6 +224,17 @@ const [isRecording, setIsRecording] =
             }}
           >
 
+<button
+  style={presetButtonStyle(
+    "original"
+  )}
+  onClick={() =>
+    setPreset("original")
+  }
+>
+  ✨ Original
+</button>
+
             <button
               style={presetButtonStyle(
                 "thermal"

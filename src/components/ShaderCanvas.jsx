@@ -94,7 +94,8 @@ vec2 distortedUV = uv;
 
 if (uPreset == 0.0) {
 
-    // THERMAL
+    // ORIGINAL
+
     distortedUV.x +=
       sin(
         uv.y * 15.0 +
@@ -110,7 +111,24 @@ if (uPreset == 0.0) {
 
 else if (uPreset == 1.0) {
 
-    // LAVA SWIRL
+    // THERMAL
+
+    distortedUV.x +=
+      sin(
+        uv.y * 15.0 +
+        t * 1.2
+      ) * uDistortion;
+
+    distortedUV.y +=
+      cos(
+        uv.x * 12.0 +
+        t
+      ) * uDistortion;
+}
+
+else if (uPreset == 2.0) {
+
+    // LAVA
 
     float angle =
       sin(
@@ -130,9 +148,9 @@ else if (uPreset == 1.0) {
       1.5;
 }
 
-else if (uPreset == 2.0) {
+else if (uPreset == 3.0) {
 
-    // TOXIC BUBBLE
+    // TOXIC
 
     distortedUV.x +=
       sin(
@@ -151,9 +169,9 @@ else if (uPreset == 2.0) {
       1.2;
 }
 
-else if (uPreset == 3.0) {
+else if (uPreset == 4.0) {
 
-    // OCEAN CURRENT
+    // OCEAN
 
     distortedUV.x +=
       sin(
@@ -202,72 +220,90 @@ else {
                 texColor.b
               ) / 3.0;
 
-            vec3 heatColor;
+vec3 heatColor;
 
-            if (uPreset == 0.0) {
+if (uPreset == 0.0) {
 
-                if (brightness < 0.25)
-                    heatColor =
-                      vec3(0.0, 0.0, 1.0);
+    // ORIGINAL
 
-                else if (brightness < 0.5)
-                    heatColor =
-                      vec3(0.0, 1.0, 1.0);
+    heatColor =
+      texColor.rgb;
+}
 
-                else if (brightness < 0.75)
-                    heatColor =
-                      vec3(1.0, 1.0, 0.0);
+else if (uPreset == 1.0) {
 
-                else
-                    heatColor =
-                      vec3(1.0, 0.0, 0.0);
-            }
+    // THERMAL
 
-            else if (uPreset == 1.0) {
+    if (brightness < 0.25)
+        heatColor =
+          vec3(0.0, 0.0, 1.0);
 
-                heatColor =
-                  mix(
-                    vec3(0.3, 0.0, 0.5),
-                    vec3(1.0, 0.4, 0.0),
-                    brightness
-                  );
-            }
+    else if (brightness < 0.5)
+        heatColor =
+          vec3(0.0, 1.0, 1.0);
 
-            else if (uPreset == 2.0) {
+    else if (brightness < 0.75)
+        heatColor =
+          vec3(1.0, 1.0, 0.0);
 
-                heatColor =
-                  mix(
-                    vec3(0.0, 0.2, 0.0),
-                    vec3(0.8, 1.0, 0.0),
-                    brightness
-                  );
-            }
+    else
+        heatColor =
+          vec3(1.0, 0.0, 0.0);
+}
 
-            else if (uPreset == 3.0) {
+else if (uPreset == 2.0) {
 
-                heatColor =
-                  mix(
-                    vec3(0.0, 0.0, 0.3),
-                    vec3(0.0, 1.0, 1.0),
-                    brightness
-                  );
-            }
+    // LAVA
 
-            else {
+    heatColor =
+      mix(
+        vec3(0.3, 0.0, 0.5),
+        vec3(1.0, 0.4, 0.0),
+        brightness
+      );
+}
 
-                heatColor =
-                  vec3(
-                    brightness,
-                    sin(
-                      t +
-                      brightness * 5.0
-                    ),
-                    cos(
-                      t +
-                      brightness * 5.0
-                    )
-                  );
-            }
+else if (uPreset == 3.0) {
+
+    // TOXIC
+
+    heatColor =
+      mix(
+        vec3(0.0, 0.2, 0.0),
+        vec3(0.8, 1.0, 0.0),
+        brightness
+      );
+}
+
+else if (uPreset == 4.0) {
+
+    // OCEAN
+
+    heatColor =
+      mix(
+        vec3(0.0, 0.0, 0.3),
+        vec3(0.0, 1.0, 1.0),
+        brightness
+      );
+}
+
+else {
+
+    // GLITCH
+
+    heatColor =
+      vec3(
+        brightness,
+        sin(
+          t +
+          brightness * 5.0
+        ),
+        cos(
+          t +
+          brightness * 5.0
+        )
+      );
+}
 
             heatColor *= uGlow;
 
@@ -285,13 +321,14 @@ else {
 
     scene.add(mesh);
 
-    const presetMap = {
-      thermal: 0,
-      lava: 1,
-      toxic: 2,
-      ocean: 3,
-      glitch: 4
-    };
+const presetMap = {
+  original: 0,
+  thermal: 1,
+  lava: 2,
+  toxic: 3,
+  ocean: 4,
+  glitch: 5
+};
 
     material.uniforms.uPreset.value =
       presetMap[preset];
